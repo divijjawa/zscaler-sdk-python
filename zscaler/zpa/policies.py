@@ -3213,6 +3213,10 @@ class PolicySetControllerAPI(APIClient):
                 capabilities.append("INSPECT_FILE_UPLOAD")
             if priv_caps_map.get("monitor_session", False):
                 capabilities.append("MONITOR_SESSION")
+            if priv_caps_map.get("control_session", False):
+                capabilities.append("CONTROL_SESSION")
+            if priv_caps_map.get("join_session", False):
+                capabilities.append("JOIN_SESSION")
             if priv_caps_map.get("record_session", False):
                 capabilities.append("RECORD_SESSION")
             if priv_caps_map.get("share_session", False):
@@ -3362,6 +3366,10 @@ class PolicySetControllerAPI(APIClient):
                     capabilities.append("INSPECT_FILE_UPLOAD")
                 if priv_caps_map.get("monitor_session", False):
                     capabilities.append("MONITOR_SESSION")
+                if priv_caps_map.get("control_session", False):
+                    capabilities.append("CONTROL_SESSION")
+                if priv_caps_map.get("join_session", False):
+                    capabilities.append("JOIN_SESSION")
                 if priv_caps_map.get("record_session", False):
                     capabilities.append("RECORD_SESSION")
                 if priv_caps_map.get("share_session", False):
