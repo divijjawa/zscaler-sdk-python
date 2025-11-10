@@ -9,7 +9,7 @@ import requests
 if TYPE_CHECKING:
     from zscaler.request_executor import RequestExecutor
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("zscaler-sdk-python")
 
 
 class ZscalerAPIResponse:

@@ -6,7 +6,7 @@ from zscaler.errors.http_error import HTTPError
 from zscaler.errors.zscaler_api_error import ZscalerAPIError
 from zscaler.exceptions import HTTPException, ZscalerAPIException, exceptions
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("zscaler-sdk-python")
 
 
 # @staticmethod

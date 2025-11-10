@@ -6,7 +6,7 @@ import yaml
 from zscaler.constants import _GLOBAL_YAML_PATH, _LOCAL_YAML_PATH
 from zscaler.helpers import flatten_dict, to_snake_case, unflatten_dict
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("zscaler-sdk-python")
 
 
 class ConfigSetter:

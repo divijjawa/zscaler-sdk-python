@@ -24,7 +24,7 @@ from zscaler.utils import format_url, transform_common_id_fields
 from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
 from zscaler.zpa.models.application_segment import ApplicationSegments
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("zscaler-sdk-python")
 
 
 class ApplicationSegmentBAAPI(APIClient):

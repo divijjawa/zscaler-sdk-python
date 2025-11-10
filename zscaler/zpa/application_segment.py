@@ -25,7 +25,7 @@ from zscaler.zpa.app_segment_by_type import ApplicationSegmentByTypeAPI
 from zscaler.zpa.models.application_segment import ApplicationSegments, MultiMatchUnsupportedReferences
 from zscaler.zpa.models.application_segment_lb import WeightedLBConfig
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("zscaler-sdk-python")
 
 
 class ApplicationSegmentAPI(APIClient):

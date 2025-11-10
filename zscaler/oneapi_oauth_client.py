@@ -19,7 +19,7 @@ from zscaler.constants import ONEAPI_GOV_AUTH_DOMAINS
 from zscaler.errors.response_checker import check_response_for_error
 from zscaler.user_agent import UserAgent
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("zscaler-sdk-python")
 
 # Security constants for key validation
 MIN_RSA_KEY_SIZE: int = 2048  # NIST recommends minimum 2048 bits for RSA keys

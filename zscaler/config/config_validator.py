@@ -12,7 +12,7 @@ from zscaler.error_messages import (
     ERROR_MESSAGE_ZPA_MICROTENANT_ID,
 )
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("zscaler-sdk-python")
 
 
 class ConfigValidator:

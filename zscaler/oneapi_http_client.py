@@ -15,7 +15,7 @@ from zscaler.ztb.legacy import LegacyZTBClientHelper
 from zscaler.ztw.legacy import LegacyZTWClientHelper
 from zscaler.zwa.legacy import LegacyZWAClientHelper
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("zscaler-sdk-python")
 
 
 class HTTPClient:

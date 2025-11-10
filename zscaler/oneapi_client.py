@@ -65,7 +65,7 @@ class Client:
         if use_legacy_client and zcc_legacy_client:
             self._config = {}
             self._request_executor = zcc_legacy_client
-            self.logger = logging.getLogger(__name__)
+            self.logger = logging.getLogger("zscaler-sdk-python")
             self.logger.info("Legacy ZCC client initialized successfully.")
             return
 
@@ -81,7 +81,7 @@ class Client:
         if use_legacy_client and zdx_legacy_client:
             self._config = {}
             self._request_executor = zdx_legacy_client
-            self.logger = logging.getLogger(__name__)
+            self.logger = logging.getLogger("zscaler-sdk-python")
             self.logger.info("Legacy ZDX client initialized successfully.")
             return
 
@@ -89,7 +89,7 @@ class Client:
         if use_legacy_client and zwa_legacy_client:
             self._config = {}
             self._request_executor = zwa_legacy_client
-            self.logger = logging.getLogger(__name__)
+            self.logger = logging.getLogger("zscaler-sdk-python")
             self.logger.info("Legacy ZWA client initialized successfully.")
             return
 
@@ -97,7 +97,7 @@ class Client:
         if use_legacy_client and zpa_legacy_client:
             self._config = {}
             self._request_executor = zpa_legacy_client
-            self.logger = logging.getLogger(__name__)
+            self.logger = logging.getLogger("zscaler-sdk-python")
             self.logger.info("Legacy ZPA client initialized successfully.")
             return
 
@@ -105,7 +105,7 @@ class Client:
         if use_legacy_client and zia_legacy_client:
             self._config = {}
             self._request_executor = zia_legacy_client
-            self.logger = logging.getLogger(__name__)
+            self.logger = logging.getLogger("zscaler-sdk-python")
             self.logger.info("Legacy ZIA client initialized successfully.")
             return
 
@@ -113,7 +113,7 @@ class Client:
         if use_legacy_client and ztw_legacy_client:
             self._config = {}
             self._request_executor = ztw_legacy_client
-            self.logger = logging.getLogger(__name__)
+            self.logger = logging.getLogger("zscaler-sdk-python")
             self.logger.info("Legacy ZTWService client initialized successfully.")
             return
 
@@ -143,7 +143,7 @@ class Client:
 
         # Setup logging with the extracted configuration
         setup_logging("zscaler-sdk-python", enabled=enabled, verbose=verbose)
-        self.logger = logging.getLogger(__name__)
+        self.logger = logging.getLogger("zscaler-sdk-python")
 
         # self.logger.debug("Initializing Client with user configuration.")
         client_config_setter = ConfigSetter()

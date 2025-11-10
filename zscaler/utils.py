@@ -36,7 +36,7 @@ from requests import Response
 # from restfly import APIIterator
 from zscaler.constants import DATETIME_FORMAT, EPOCH_DAY, EPOCH_MONTH, EPOCH_YEAR, RETRYABLE_STATUS_CODES
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("zscaler-sdk-python")
 
 # 1) Single global reformat_params
 reformat_params = [
