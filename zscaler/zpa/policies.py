@@ -3400,6 +3400,185 @@ class PolicySetControllerAPI(APIClient):
         return (result, response, None)
 
     @synchronized(global_rule_lock)
+    def add_portal_rule_v2(self, name: str, **kwargs) -> tuple:
+        """
+        Add a new portal policy rule.
+
+        Args:
+            name (str):
+                The name of the new portal rule.
+            **kwargs:
+                Optional keyword args.
+
+        Keyword Args:
+            description (str):
+                A description for the rule.
+            rule_order (str):
+                The new order for the rule.
+            conditions (list):
+                A list of conditional rule tuples.
+            portal_rule_capabilities (dict): A dictionary specifying the portal rule capabilities with boolean values.
+                The supported capabilities are:
+
+                - delete_file (bool): Indicates the delete file operation on PRA my files portal.
+                - uninspected_file (bool): Indicates the access uninspected file operation on PRA my files portal.
+                - sandbox_scan (bool): Indicates the sandbox scan enabled for file on PRA my files portal.
+                - di_scan (bool): Indicates the di scan enabled for file on PRA my files portal.
+                - request_approvals (bool): Enables user to send request for console access using PRA EU approval portal.
+                - review_approvals (bool): Enables user to approve request for console access using PRA EU approval portal.
+
+        Returns:
+            :obj:`Tuple`: The resource record of the newly created portal policy rule.
+        """
+        policy_type_response, _, err = self.get_policy(
+            "portal_policy", query_params={"microtenantId": kwargs.get("microtenantId")}
+        )
+        if err or not policy_type_response:
+            return (None, None, f"Error retrieving policy for 'portal_policy': {err}")
+
+        policy_set_id = policy_type_response.get("id")
+        if not policy_set_id:
+            return (None, None, "No policy ID found for 'portal_policy' policy type")
+
+        http_method = "post".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint_v2}
+            /policySet/{policy_set_id}/rule
+        """)
+
+        microtenant_id = kwargs.get("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        payload = {
+            "name": name,
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
+            "action": "CHECK_PRIVILEGED_PORTAL_CAPABILITIES",
+            "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
+        }
+
+        if "portal_rule_capabilities" in kwargs:
+            capabilities = []
+            caps_map = kwargs.pop("portal_rule_capabilities")
+
+            if caps_map.get("delete_file", False):
+                capabilities.append("DELETE_FILE")
+            if caps_map.get("uninspected_file", False):
+                capabilities.append("UNINSPECTED_FILE")
+            if caps_map.get("sandbox_scan", False):
+                capabilities.append("SANDBOX_SCAN")
+            if caps_map.get("di_scan", False):
+                capabilities.append("DI_SCAN")
+            if caps_map.get("request_approvals", False):
+                capabilities.append("REQUEST_APPROVALS")
+            if caps_map.get("review_approvals", False):
+                capabilities.append("REVIEW_APPROVALS")
+
+            payload["privilegedPortalCapabilities"] = {"capabilities": capabilities}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, PolicySetControllerV2)
+        if error:
+            return (None, response, error)
+
+        try:
+            result = PolicySetControllerV2(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    @synchronized(global_rule_lock)
+    def update_portal_rule_v2(self, rule_id: str, name: str = None, **kwargs) -> tuple:
+        """
+        Update an existing portal policy rule.
+
+        Args:
+            rule_id (str):
+                The unique identifier for the rule to be updated.
+            name (str):
+                The updated name for the rule.
+            **kwargs:
+                Optional keyword args.
+
+        Keyword Args:
+            description (str):
+                A description for the rule.
+            rule_order (str):
+                The new order for the rule.
+            conditions (list):
+                A list of conditional rule tuples.
+            portal_rule_capabilities (dict): A dictionary specifying the portal rule capabilities with boolean values.
+
+        Returns:
+            :obj:`Tuple`: The updated portal policy rule resource record.
+        """
+        policy_type_response, _, err = self.get_policy(
+            "portal_policy", query_params={"microtenantId": kwargs.get("microtenantId")}
+        )
+        if err or not policy_type_response:
+            return (None, None, f"Error retrieving policy for 'portal_policy': {err}")
+
+        policy_set_id = policy_type_response.get("id")
+        if not policy_set_id:
+            return (None, None, "No policy ID found for 'portal_policy' policy type")
+
+        http_method = "put".upper()
+        api_url = format_url(f"""
+            {self._zpa_base_endpoint_v2}
+            /policySet/{policy_set_id}/rule/{rule_id}
+        """)
+
+        microtenant_id = kwargs.get("microtenant_id", None)
+        params = {"microtenantId": microtenant_id} if microtenant_id else {}
+
+        payload = {
+            "name": name,
+            "description": kwargs.get("description"),
+            "rule_order": kwargs.get("rule_order"),
+            "action": "CHECK_PRIVILEGED_PORTAL_CAPABILITIES",
+            "conditions": self._create_conditions_v2(kwargs.pop("conditions", [])),
+        }
+
+        if "portal_rule_capabilities" in kwargs:
+            capabilities = []
+            caps_map = kwargs.pop("portal_rule_capabilities")
+
+            if caps_map.get("delete_file", False):
+                capabilities.append("DELETE_FILE")
+            if caps_map.get("uninspected_file", False):
+                capabilities.append("UNINSPECTED_FILE")
+            if caps_map.get("sandbox_scan", False):
+                capabilities.append("SANDBOX_SCAN")
+            if caps_map.get("di_scan", False):
+                capabilities.append("DI_SCAN")
+            if caps_map.get("request_approvals", False):
+                capabilities.append("REQUEST_APPROVALS")
+            if caps_map.get("review_approvals", False):
+                capabilities.append("REVIEW_APPROVALS")
+
+            payload["privilegedPortalCapabilities"] = {"capabilities": capabilities}
+
+        request, error = self._request_executor.create_request(http_method, api_url, body=payload, params=params)
+        if error:
+            return (None, None, error)
+
+        response, error = self._request_executor.execute(request, PolicySetControllerV2)
+        if error:
+            return (None, response, error)
+
+        if response is None or not response.get_body():
+            return (PolicySetControllerV2({"id": rule_id}), response, None)
+
+        try:
+            result = PolicySetControllerV2(self.form_response_body(response.get_body()))
+        except Exception as error:
+            return (None, response, error)
+        return (result, response, None)
+
+    @synchronized(global_rule_lock)
     def add_redirection_rule_v2(self, name: str, action: str, service_edge_group_ids: list = [], **kwargs) -> APIResult[dict]:
         """
         Add a new Redirection Policy rule.
