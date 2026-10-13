@@ -3464,11 +3464,11 @@ class PolicySetControllerAPI(APIClient):
             if caps_map.get("delete_file", False):
                 capabilities.append("DELETE_FILE")
             if caps_map.get("uninspected_file", False):
-                capabilities.append("UNINSPECTED_FILE")
+                capabilities.append("ACCESS_UNINSPECTED_FILE")
             if caps_map.get("sandbox_scan", False):
-                capabilities.append("SANDBOX_SCAN")
-            if caps_map.get("di_scan", False):
-                capabilities.append("DI_SCAN")
+                capabilities.append("UPLOAD_INSPECTED_SANDBOX")
+            elif caps_map.get("di_scan", False):
+                capabilities.append("UPLOAD_INSPECTED_SCAN")
             if caps_map.get("request_approvals", False):
                 capabilities.append("REQUEST_APPROVALS")
             if caps_map.get("review_approvals", False):
@@ -3549,11 +3549,11 @@ class PolicySetControllerAPI(APIClient):
             if caps_map.get("delete_file", False):
                 capabilities.append("DELETE_FILE")
             if caps_map.get("uninspected_file", False):
-                capabilities.append("UNINSPECTED_FILE")
+                capabilities.append("ACCESS_UNINSPECTED_FILE")
             if caps_map.get("sandbox_scan", False):
-                capabilities.append("SANDBOX_SCAN")
-            if caps_map.get("di_scan", False):
-                capabilities.append("DI_SCAN")
+                capabilities.append("UPLOAD_INSPECTED_SANDBOX")
+            elif caps_map.get("di_scan", False):
+                capabilities.append("UPLOAD_INSPECTED_SCAN")
             if caps_map.get("request_approvals", False):
                 capabilities.append("REQUEST_APPROVALS")
             if caps_map.get("review_approvals", False):
